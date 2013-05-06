@@ -8,5 +8,5 @@ import java.io.IOException;
  */
 public interface FileReaderStrategy<T> {
 
-    public abstract T readFile(String filepath) throws IOException;
+    public abstract T readFile(String filepath) throws FileServiceException;
 }

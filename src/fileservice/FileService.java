@@ -17,9 +17,6 @@ public class FileService {
     private FileReaderStrategy reader;
     private FileWriterStrategy writer;
 
-    public FileService() {
-    }
-
     public FileService(FileReaderStrategy reader, FileWriterStrategy writer) {
         this.reader = reader;
         this.writer = writer;
@@ -54,8 +51,13 @@ public class FileService {
         this.writer = writer;
     }
 
-    public static void main(String[] args) {
-        FileService fs = new FileService(new TextFileReader(new CsvCommaFormat(true)), new TextFileWriter(new CsvCommaFormat(true)));
+    public static void main(String[] args) throws FileServiceException{
+        FileService fs;
+        try {
+            fs = new FileService(new TextFileReader(new CsvCommaFormat(true)), new TextFileWriter(new CsvCommaFormat(true)));
+        } catch (FileServiceException ex) {
+            throw ex;
+        }
 
 //        LinkedHashMap<String, String> map1 = new LinkedHashMap<>();
 //        map1.put("Hours Parked: ", "22.0");
@@ -81,7 +83,7 @@ public class FileService {
                 + "parkedHours.txt";
         try {
             List<LinkedHashMap<String, String>> data = fs.readFile
-                (File.separatorChar + "temp" + File.separatorChar 
+                (File.separatorChar + "tem" + File.separatorChar 
                 + "parkedHours.txt");
         
         for (LinkedHashMap<String, String> linkedHashMap : data) {
