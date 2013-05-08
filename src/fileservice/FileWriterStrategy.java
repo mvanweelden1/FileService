@@ -11,6 +11,6 @@ public interface FileWriterStrategy<T> {
     
     
     
-    public abstract void writeToFile(String filePath, T data, boolean append)throws IOException;
+    public abstract void writeToFile(String filePath, T data, boolean append)throws FileServiceException;
 
 }

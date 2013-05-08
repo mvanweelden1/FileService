@@ -4,12 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *File service is a portable service for the reading and writing of files
+ * Writing to a file requires the data to be passed in the form of a List of 
+ * linked hash maps
+ * Reading from a file returns an ArrayList of linked hash maps
+ * 
  * @author Mark Van Weelden <mvanweelden1@my.wctc.edu>
  */
 public class FileService {
@@ -28,7 +30,7 @@ public class FileService {
         writer.writeToFile(filePath, data, append);
     }
 
-    public List<LinkedHashMap<String, String>> readFile(String filePath) throws Exception{
+    public List<LinkedHashMap<String, String>> readFile(String filePath) throws FileServiceException{
         ArrayList<LinkedHashMap<String, String>> data;
         data = (ArrayList<LinkedHashMap<String, String>>) reader.readFile(filePath);
        
@@ -52,11 +54,11 @@ public class FileService {
     }
 
     public static void main(String[] args) throws FileServiceException{
-        FileService fs;
+        FileService fs = null;
         try {
             fs = new FileService(new TextFileReader(new CsvCommaFormat(true)), new TextFileWriter(new CsvCommaFormat(true)));
         } catch (FileServiceException ex) {
-            throw ex;
+            JOptionPane.showMessageDialog(null, ex);
         }
 
 //        LinkedHashMap<String, String> map1 = new LinkedHashMap<>();
@@ -83,14 +85,14 @@ public class FileService {
                 + "parkedHours.txt";
         try {
             List<LinkedHashMap<String, String>> data = fs.readFile
-                (File.separatorChar + "tem" + File.separatorChar 
+                (File.separatorChar + "temp" + File.separatorChar 
                 + "parkedHours.txt");
         
         for (LinkedHashMap<String, String> linkedHashMap : data) {
             System.out.println(linkedHashMap);
         }
            
-        } catch (Exception ex) {
+        } catch (FileServiceException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
 
